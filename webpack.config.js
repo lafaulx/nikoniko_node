@@ -3,8 +3,6 @@
 var path = require('path');
 var autoprefixer = require('autoprefixer-core');
 
-console.log(path.join(process.cwd(), 'build/assets'));
-
 module.exports = {
   context: path.join(process.cwd(), 'src'),
   entry: {
