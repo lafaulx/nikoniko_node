@@ -7,14 +7,33 @@ import MoodChoice from './MoodChoice';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isMoodChosen: false,
+      mood: null
+    }
+
+    this.handleMoodChange = this.handleMoodChange.bind(this);
   }
 
   render() {
     return (
       <div className='App'>
-        <h1>How was your day?</h1>
-        <MoodChoice />
+        {!this.state.isMoodChosen &&
+          <MoodChoice onMoodChange={this.handleMoodChange} />
+        }
+
+        {this.state.isMoodChosen &&
+          <span>Good for you!</span>
+        }
       </div>
     );
+  }
+
+  handleMoodChange(mood) {
+    this.setState({
+      isMoodChosen: true,
+      mood: mood
+    });
   }
 }

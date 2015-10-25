@@ -1,11 +1,13 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var http = require('http');
+var MongoClient = require('mongodb').MongoClient
 
-var routes = require('./routes/index');
+var web = require('./routes/web');
+var api = require('./routes/api');
 
 var app = express();
 
@@ -18,6 +20,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.use('/', routes);
+app.set('port', 3000);
 
-module.exports = app;
+MongoClient.connect('mongodb://localhost:27017/nikoniko', function(err, db) {
+  console.log('Connected to MongoDB');
+
+  app.use('/', web(db));
+  app.use('/api', api(db));
+  http.createServer(app).listen(3000);
+});
