@@ -35,7 +35,7 @@ export default class Stats extends React.Component {
 
   renderStat({year, month, day, good, bad, neutral}) {
     return (
-      <div className='Stat'>
+      <div className='Stat' key={year + month + day}>
         <h2>{moment({year: year, month: month, day: day}).format('MMMM Do YYYY')}</h2>
         <div>
           <h3>😀</h3>
