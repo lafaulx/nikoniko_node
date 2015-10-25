@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './MoodChoice.less';
 
 import API from '../api/API';
+
 export default class MoodChoice extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +25,7 @@ export default class MoodChoice extends React.Component {
   }
 
   handleClick(mood) {
-    API.submit(mood).then(() => {
+    API.submitMood(mood).then(() => {
       this.props.onMoodChange(mood);
     });
   }

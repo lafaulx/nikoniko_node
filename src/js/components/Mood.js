@@ -1,10 +1,10 @@
 import React from 'react';
 
-import styles from './App.less';
+import styles from './Mood.less';
 
 import MoodChoice from './MoodChoice';
 
-export default class App extends React.Component {
+export default class Mood extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,13 +18,16 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className='App'>
+      <div className='Mood'>
         {!this.state.isMoodChosen &&
           <MoodChoice onMoodChange={this.handleMoodChange} />
         }
 
         {this.state.isMoodChosen &&
-          <span>Good for you!</span>
+          <div>
+            <h1>Submitted!</h1>
+            <h2>Check out the <a href='/stats'>stats</a> if you want to.</h2>
+          </div>
         }
       </div>
     );

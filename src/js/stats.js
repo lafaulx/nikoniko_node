@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './components/App';
+import Stats from './components/Stats';
 
 import styles from '../less/base.less';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<Stats />, document.getElementById('stats'));

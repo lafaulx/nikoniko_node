@@ -13,7 +13,11 @@ function getAPIUrl(endpoint) {
 
 
 export default {
-  submit: function(mood) {
+  submitMood: function(mood) {
     return axios.post(getAPIUrl('/api/submit'), {mood: mood});
+  },
+
+  getStats: function() {
+    return axios.get(getAPIUrl('/api/stats'));
   }
 };

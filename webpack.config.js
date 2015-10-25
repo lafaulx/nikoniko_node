@@ -6,7 +6,8 @@ var autoprefixer = require('autoprefixer-core');
 module.exports = {
   context: path.join(process.cwd(), 'src'),
   entry: {
-    index: ['./js/index']
+    mood: ['./js/mood'],
+    stats: ['./js/stats']
   },
   output: {
     path: path.join(process.cwd(), 'build/assets'),
