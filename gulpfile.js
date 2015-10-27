@@ -4,6 +4,10 @@ var webpack = require('webpack');
 
 var config = require('./webpack.config');
 
+gulp.task('watch', function() {
+  gulp.watch('src/**/*.*', ['webpack']);
+});
+
 gulp.task('webpack', function(callback) {
   webpack(config, function(err, stats) {
     if (err) {
@@ -13,3 +17,5 @@ gulp.task('webpack', function(callback) {
     callback();
   });
 });
+
+gulp.task('default', ['watch', 'webpack']);

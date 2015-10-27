@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './MoodChoice.less';
 
 import API from '../api/API';
+import { getDateObj } from '../utils/dateUtils';
 
 export default class MoodChoice extends React.Component {
   constructor(props) {
@@ -26,6 +27,8 @@ export default class MoodChoice extends React.Component {
 
   handleClick(mood) {
     API.submitMood(mood).then(() => {
+      let nowStr = JSON.stringify(getDateObj(new Date()));
+      window.localStorage.setItem('moodSubmissionDate', nowStr);
       this.props.onMoodChange(mood);
     });
   }
