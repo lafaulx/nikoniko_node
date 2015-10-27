@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 process.env.API_ORIGIN = config.API_ORIGIN;
 
-MongoClient.connect('mongodb://' + config.MONGODB_ADDR + ':' + config.MONGODB_PORT + '/' + config.MONGODB_ADDR, function(err, db) {
+MongoClient.connect('mongodb://' + config.MONGODB_ADDR + ':' + config.MONGODB_PORT + '/' + config.MONGODB_DB, function(err, db) {
   if (err) {
     logger.error('Error connecting to MongoDB – quitting');
     return;
@@ -40,7 +40,7 @@ MongoClient.connect('mongodb://' + config.MONGODB_ADDR + ':' + config.MONGODB_PO
 
   logger.info('Connected to MongoDB');
 
-  app.use('/', web(db));
+  app.use('/', web(db, config, development));
   app.use('/api', api(db));
 
   app.listen(config.NODEJS_PORT, config.NODEJS_ADDR, function () {

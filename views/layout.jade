@@ -2,5 +2,8 @@ doctype html
 html
   head
     title Niko-niko
+
+    if isDevelopment
+      script(src="http://localhost:#{DEV_SERVER_PORT}/webpack-dev-server.js")
   body
     block content

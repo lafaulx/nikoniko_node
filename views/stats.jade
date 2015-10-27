@@ -2,4 +2,8 @@ extends layout
 
 block content
   div#stats
-  script(src='/assets/stats.js')
+
+  if isDevelopment
+    script(src='http://localhost:#{DEV_SERVER_PORT}/assets/stats.js')
+  else
+    script(src='/assets/stats.js')

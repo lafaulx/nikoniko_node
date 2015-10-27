@@ -2,4 +2,8 @@ extends layout
 
 block content
   div#mood
-  script(src='/assets/mood.js')
+
+  if isDevelopment
+    script(src='http://localhost:#{DEV_SERVER_PORT}/assets/mood.js')
+  else
+    script(src='/assets/mood.js')
