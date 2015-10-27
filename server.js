@@ -1,31 +1,49 @@
 var express = require('express');
 var path = require('path');
-var logger = require('morgan');
+var logger = require('bunyan').createLogger({ name: 'nikoniko' });
+var bunyanMiddleware = require('bunyan-middleware')
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
-var MongoClient = require('mongodb').MongoClient
+var MongoClient = require('mongodb').MongoClient;
 
 var web = require('./routes/web');
 var api = require('./routes/api');
+
+var config;
+var development = process.env.NODE_ENV !== 'production';
+
+try {
+  config = require('./local_config.js');
+} catch (err) {
+  logger.warn('Provide local_config.js. See local_config.example.js.');
+}
 
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
+app.use(bunyanMiddleware({logger: logger}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.set('port', 3000);
+process.env.API_ORIGIN = config.API_ORIGIN;
 
-MongoClient.connect('mongodb://localhost:27017/nikoniko', function(err, db) {
-  console.log('Connected to MongoDB');
+MongoClient.connect('mongodb://' + config.MONGODB_ADDR + ':' + config.MONGODB_PORT + '/' + config.MONGODB_ADDR, function(err, db) {
+  if (err) {
+    logger.error('Error connecting to MongoDB – quitting');
+    return;
+  }
+
+  logger.info('Connected to MongoDB');
 
   app.use('/', web(db));
   app.use('/api', api(db));
-  http.createServer(app).listen(3000);
+
+  app.listen(config.NODEJS_PORT, config.NODEJS_ADDR, function () {
+    logger.info('Listening for requests at ' + config.NODEJS_ADDR + ':' + config.NODEJS_PORT);
+  });
 });
