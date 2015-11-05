@@ -45,7 +45,6 @@ export default class Mood extends React.Component {
         {this.state.isMoodChosen &&
           <div>
             <h1>{this.state.mood ? 'Submitted!' : 'You\'ve already shared your mood today.'}</h1>
-            <h2>Check out the <a href='/stats'>stats</a> if you want to.</h2>
           </div>
         }
       </div>
