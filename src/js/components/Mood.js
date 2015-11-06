@@ -28,7 +28,7 @@ export default class Mood extends React.Component {
     let today = getDateObj(new Date());
     let moodSubmission = JSON.parse(moodSubmissionDateStr);
 
-    if (today.y === moodSubmission.y || today.m === moodSubmission.m || today.d === moodSubmission.d) {
+    if (today.y === moodSubmission.y && today.m === moodSubmission.m && today.d === moodSubmission.d) {
       this.setState({
         isMoodChosen: true
       });
