@@ -48,7 +48,9 @@ module.exports = function(db) {
       $project: {
         _id: 0,
         year: '$_id.year',
-        month: '$_id.month',
+        month: {
+          $subtract: ['$_id.month', 1]
+        },
         day: '$_id.day',
         good: 1,
         neutral: 1,
