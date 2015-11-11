@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-var logger = require('bunyan').createLogger({ name: 'nikoniko' });
+var bunyan = require('bunyan');
 var bunyanMiddleware = require('bunyan-middleware')
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -12,6 +12,17 @@ var api = require('./routes/api');
 
 var config;
 var development = process.env.NODE_ENV !== 'production';
+
+var logger = bunyan.createLogger({
+  name: 'nikoniko'
+  streams: [{
+    level: 'info',
+    stream: process.stdout
+  }, {
+    level: 'error',
+    path: '/var/tmp/nikoniko-error.log'
+  }]
+});
 
 try {
   config = require('./local_config.js');
@@ -32,7 +43,15 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 process.env.API_ORIGIN = config.API_ORIGIN;
 
-MongoClient.connect('mongodb://' + config.MONGODB_ADDR + ':' + config.MONGODB_PORT + '/' + config.MONGODB_DB, function(err, db) {
+MongoClient.connect('mongodb://' + config.MONGODB_ADDR + ':' + config.MONGODB_PORT + '/' + config.MONGODB_DB, {
+  db: {
+    retryMiliSeconds: 1000,
+    bufferMaxExtries: 0
+  },
+  server: {
+    autoReconnect: true
+  }
+}, function(err, db) {
   if (err) {
     logger.error('Error connecting to MongoDB – quitting');
     return;
