@@ -14,7 +14,7 @@ var config;
 var development = process.env.NODE_ENV !== 'production';
 
 var logger = bunyan.createLogger({
-  name: 'nikoniko'
+  name: 'nikoniko',
   streams: [{
     level: 'info',
     stream: process.stdout
