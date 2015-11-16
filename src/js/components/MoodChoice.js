@@ -17,9 +17,11 @@ export default class MoodChoice extends React.Component {
       <div className='MoodChoice'>
         <h1>How was your day?</h1>
         <div>
-          <button onClick={() => this.handleClick('good')}>😀</button>
-          <button onClick={() => this.handleClick('neutral')}>😐</button>
-          <button onClick={() => this.handleClick('bad')}>😢</button>
+          <button onClick={() => this.handleClick('magical')}><img src='/assets/img/magical.png'/></button>
+          <button onClick={() => this.handleClick('good')}><img src='/assets/img/good.png'/></button>
+          <button onClick={() => this.handleClick('neutral')}><img src='/assets/img/meh.png'/></button>
+          <button onClick={() => this.handleClick('bad')}><img src='/assets/img/bad.png'/></button>
+          <button onClick={() => this.handleClick('angry')}><img src='/assets/img/flip.png'/></button>
         </div>
       </div>
     );
