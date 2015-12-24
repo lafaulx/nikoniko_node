@@ -28,11 +28,6 @@ module.exports = function(db) {
           month: { $month: '$date' },
           day: { $dayOfMonth: '$date' },
         },
-        magical: {
-          $sum: {
-            $cond: [ { $eq: [ '$mood', 'magical' ] }, 1, 0 ]
-          }
-        },
         good: {
           $sum: {
             $cond: [ { $eq: [ '$mood', 'good' ] }, 1, 0 ]
@@ -48,11 +43,6 @@ module.exports = function(db) {
             $cond: [ { $eq: [ '$mood', 'bad' ] }, 1, 0 ]
           }
         },
-        angry: {
-          $sum: {
-            $cond: [ { $eq: [ '$mood', 'angry' ] }, 1, 0 ]
-          }
-        }
       }
     }, {
       $project: {
@@ -62,11 +52,9 @@ module.exports = function(db) {
           $subtract: ['$_id.month', 1]
         },
         day: '$_id.day',
-        magical: 1,
         good: 1,
         neutral: 1,
-        bad: 1,
-        angry: 1
+        bad: 1
       }
     }, {
       $sort: {

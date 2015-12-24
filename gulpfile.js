@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var path = require('path');
 
 var config = require('./local_config');
 var webpackConfig = require('./webpack.config');
@@ -15,12 +14,6 @@ gulp.task('webpack', function(callback) {
 
     callback();
   });
-});
-
-gulp.task('images', function () {
-  return gulp
-    .src(['src/img/**'], { base: 'src' })
-    .pipe(gulp.dest(path.join(process.cwd(), 'build', 'assets')));
 });
 
 gulp.task('webpack-dev-server', function(callback) {
@@ -42,5 +35,5 @@ gulp.task('webpack-dev-server', function(callback) {
   });
 });
 
-gulp.task('default', ['images', 'webpack-dev-server']);
-gulp.task('prod', ['images', 'webpack']);
+gulp.task('default', ['webpack-dev-server']);
+gulp.task('prod', ['webpack']);
