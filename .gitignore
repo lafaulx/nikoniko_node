@@ -22,4 +22,3 @@ build
 node_modules
 
 local_config.js
-.DS_Store
